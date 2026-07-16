@@ -16,7 +16,7 @@ class Base(DeclarativeBase):
     pass
 
 class SpotifyToken(Base):
-    __tablename__ = "spotify_token"
+    __tablename__ = "spotify_tokens"
     
     id: Mapped[int] = mapped_column(primary_key=True)
     refresh_token: Mapped[str] = mapped_column(String, nullable=False)

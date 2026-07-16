@@ -5,18 +5,27 @@ import secrets
 from fastapi import FastAPI, Response,  Cookie, HTTPException, status, Request
 from fastapi.responses import RedirectResponse
 from pydantic import BaseModel
+from dotenv import load_dotenv
+import os
+import httpx
+
+load_dotenv()
 
 app = FastAPI()
+
 
 @app.get("/login")
 async def login():
     user_state = secrets.token_urlsafe(16)
 
+    print("CLIENT_ID", os.getenv("SPOTIFY_CLIENT_ID"))
+    print("REDIRECT_URI", os.getenv("SPOTIFY_REDIRECT_URI"))
+    
     params = {
         "response_type": "code",
-        "client_id": "1",
+        "client_id": os.getenv("SPOTIFY_CLIENT_ID"),
         "scope": "user-read-currently-playing user-read-playback-state",
-        "redirect_uri": "http://127.0.0.1:8000/callback",
+        "redirect_uri": os.getenv("SPOTIFY_REDIRECT_URI"),
         "state": user_state
     }
     
@@ -45,11 +54,29 @@ async def search_items(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Cookie with state is empty bruh"
         )
-            
+    
     if not secrets.compare_digest(state, state_cookie):
         raise HTTPException(
             status_code = status.HTTP_400_BAD_REQUEST,
             detail="Mistake of security state is not compare"
         )
-        
+
+    async with httpx.AsyncClient() as client:
+        r = await client.post(url="https://accounts.spotify.com/api/token", data = {
+        "grant_type": "authorization_code",
+        "code": code,
+        "redirect_uri": os.getenv("SPOTIFY_REDIRECT_URI"),
+        "client_id": os.getenv("SPOTIFY_CLIENT_ID"),
+        "client_secret": os.getenv("SPOTIFY_CLIENT_SECRET")
+    })
+    
+    data = r.json()
+    refresh_token = data.get("refresh_token")
+    access_token = data.get("access_token")
+    expires_in = data.get("expires_in")
+    print(refresh_token)
+    print(access_token)
+    print(expires_in)
+    
+    
     return {"code": code, "state": state, "status": "verified"}

@@ -8,6 +8,12 @@ from pydantic import BaseModel
 from dotenv import load_dotenv
 import os
 import httpx
+from app.database import get_db
+from app.models import SpotifyToken
+from fastapi import Depends
+from sqlalchemy.ext.asyncio import AsyncSession
+from datetime import datetime, timezone, timedelta
+
 
 load_dotenv()
 
@@ -47,7 +53,8 @@ async def login():
 async def search_items(
     code: str,
     state: str,
-    state_cookie: str | None = Cookie(alias="state") 
+    state_cookie: str | None = Cookie(alias="state"),
+    db: AsyncSession = Depends(get_db)
 ):
     if not state_cookie:
         raise HTTPException(
@@ -74,9 +81,14 @@ async def search_items(
     refresh_token = data.get("refresh_token")
     access_token = data.get("access_token")
     expires_in = data.get("expires_in")
+    expires_at = datetime.now(timezone.utc) + timedelta(seconds=expires_in)    
+    spotify_token = SpotifyToken(refresh_token=refresh_token, access_token=access_token, expires_at=expires_at)
+    db.add(spotify_token)
+    await db.commit()
     print(refresh_token)
     print(access_token)
     print(expires_in)
+    print(expires_at)
     
     
     return {"code": code, "state": state, "status": "verified"}

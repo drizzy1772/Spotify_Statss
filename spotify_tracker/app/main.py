@@ -13,7 +13,7 @@ from app.models import SpotifyToken
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from datetime import datetime, timezone, timedelta
-
+from app.redis_client import saving_token
 
 load_dotenv()
 
@@ -85,6 +85,7 @@ async def search_items(
     spotify_token = SpotifyToken(refresh_token=refresh_token, access_token=access_token, expires_at=expires_at)
     db.add(spotify_token)
     await db.commit()
+    await saving_token(access_token, expires_in)
     print(refresh_token)
     print(access_token)
     print(expires_in)

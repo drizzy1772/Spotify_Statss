@@ -15,6 +15,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from datetime import datetime, timezone, timedelta, date
 from app.redis_client import saving_token, redis_client
 
+
 load_dotenv()
 app = FastAPI()
 

@@ -16,3 +16,4 @@ async def saving_token(
     expires_in: int,
 ) -> None:
     await redis_client.set("spotify_access_token", token, ex=expires_in)
+

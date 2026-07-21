@@ -14,12 +14,15 @@ from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from datetime import datetime, timezone, timedelta, date
 from app.redis_client import saving_token, redis_client
-
+from app.tasks import run_sync_daily_stats_task
 
 load_dotenv()
 app = FastAPI()
 
-
+@app.post("/test_task")
+async def test_celery_task():
+    run_sync_daily_stats_task.delay()
+    return {"status": "ok"}
 
 @app.get("/login")
 async def login():
@@ -102,5 +105,7 @@ async def listening_tracker(track_id: int):
         key=track_id,
         amount=1,
     )
-    
+
+
+ 
     return {"status": "ok", "track_id": track_id}

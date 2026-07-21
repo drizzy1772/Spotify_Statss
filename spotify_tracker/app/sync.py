@@ -9,11 +9,11 @@ from app.redis_client import redis_client
 import requests
 from app.redis_client import saving_token
 import os
-import db
+from app.database import async_session
 import httpx
 from app.models import SpotifyToken
 from app.redis_client import redis_client
-from app.models import TrackDailyStats
+from app.db_models import TrackDailyStats
 from sqlalchemy.dialects.postgresql import insert
 
 

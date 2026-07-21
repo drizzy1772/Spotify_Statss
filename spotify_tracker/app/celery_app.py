@@ -6,8 +6,8 @@ from celery.schedules import crontab
 
 celery_app = Celery(
     "spotify_stats",
-    broker="redis://localhost:6379/0",
-    backend="redis://localhost:6379/0",
+    broker="redis://redis:6379/0",
+    backend="redis://redis:6379/0",
     include=["app.tasks"])
 
 

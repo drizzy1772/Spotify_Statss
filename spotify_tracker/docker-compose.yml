@@ -17,6 +17,7 @@ services:
   
   redis:
     image: redis:7-alpine
+    command: ["redis-server", "--bind", "0.0.0.0", "--protected-mode", "no"]
     ports:
       - 6379:6379
     volumes:
@@ -32,26 +33,33 @@ services:
     env_file: .env
     ports:
       - "8000:8000"
+    environment:
+      - REDIS_HOST=redis
     depends_on:
-      - db
-      - redis
+      db:
+        condition: service_started
+      redis:
+        condition: service_healthy
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     
   worker:
     build: .
     env_file: .env
     depends_on:
-      - db
-      - redis
+      db:
+        condition: service_started
+      redis:
+        condition: service_healthy
     command: celery -A app.celery_app worker --loglevel=info
   beat:
     build: .
     env_file: .env
     depends_on:
-      - db
-      - redis
-    command: 
-      celery -A app.celery_app beat --loglevel=info
+      db:
+        condition: service_started
+      redis:
+        condition: service_healthy
+    command: celery -A app.celery_app beat --loglevel=info
 
 volumes:
   postgres_data:

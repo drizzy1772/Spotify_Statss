@@ -15,6 +15,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from datetime import datetime, timezone, timedelta, date
 from app.redis_client import saving_token, redis_client
 from app.tasks import run_sync_daily_stats_task
+from app.routers.analytics import router as analytics_router
+
+app.include_router(analytics_router)
+
 
 load_dotenv()
 app = FastAPI()

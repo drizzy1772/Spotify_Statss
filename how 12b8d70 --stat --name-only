@@ -1,0 +1,8 @@
+[33mcommit 12b8d70a3a2aa9df5da6575376bec1d05642caa4[m
+Author: drizzy1772 <bodyafrozen890@gmail.com>
+Date:   Thu Jul 23 16:45:51 2026 +0300
+
+    Added Github Actionsgit add .github/workflows/tests.yml
+
+ .../tests.yml          | 56 [32m++++++[m
+ 1 file changed, 56 insertions(+)

@@ -18,7 +18,8 @@ async def check_rate_limit(request: Request):
     client_ip = request.client.host
     redis_key = f"rate_limit:{client_ip}"
 
-    current_count = int(redis_client.get(redis_key) or 0)
+    raw_value = await redis_client.get(redis_key)
+    current_count = int(raw_value or 0)
     
     if current_count >= RATE_LIMIT:
         raise HTTPException(status_code=status.HTTP_429_TOO_MANY_REQUESTS)

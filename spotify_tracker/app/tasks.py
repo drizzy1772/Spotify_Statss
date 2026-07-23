@@ -13,7 +13,7 @@ import redis
 from datetime import date
 from app.celery_app import celery_app
 from app.database import SessionLocal
-from app.models import TrackDailyStats
+from app.db_models import TrackDailyStats
 from sqlalchemy.dialects.postgresql import insert
 
 r = redis.Redis(host="redis", port=6379, db=0, decode_responses=True)

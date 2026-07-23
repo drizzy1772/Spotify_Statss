@@ -8,9 +8,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.database import get_db
-from app.models import TrackDailyStats
+from app.db_models import TrackDailyStats
 from app.services.spotify import get_track_metadata
-from app.api.dependencies import check_rate_limit
+from app.routers.dependencies import check_rate_limit
 
 router = APIRouter(prefix="/analytics", tags=["Analytics"])
 

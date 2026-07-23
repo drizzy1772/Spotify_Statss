@@ -7,7 +7,7 @@
 
 
 from fastapi import Request, HTTPException
-from app.db import redis_client
+from app.redis_client import redis_client
 import redis
 from fastapi import status
 

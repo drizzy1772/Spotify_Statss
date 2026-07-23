@@ -6,7 +6,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 import redis.asyncio as redis
 from app.redis_client import redis_client
-import requests
 from app.redis_client import saving_token
 import os
 from app.database import async_session

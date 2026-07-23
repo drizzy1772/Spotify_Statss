@@ -17,11 +17,12 @@ from app.redis_client import saving_token, redis_client
 from app.tasks import run_sync_daily_stats_task
 from app.routers.analytics import router as analytics_router
 
-app.include_router(analytics_router)
-
 
 load_dotenv()
-app = FastAPI()
+app = FastAPI(title="Spotify Tracker API")
+
+app.include_router(analytics_router)
+
 
 @app.post("/test_task")
 async def test_celery_task():

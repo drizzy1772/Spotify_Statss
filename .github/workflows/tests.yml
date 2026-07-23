@@ -50,5 +50,6 @@ jobs:
           REDIS_HOST: localhost
           REDIS_PORT: 6379
           DATABASE_URL: postgresql+asyncpg://user:password@localhost:5432/test_db
+          PYTONPATH: spotify_tracker
         run: |
           pytest spotify_tracker/tests/

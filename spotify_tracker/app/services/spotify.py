@@ -8,7 +8,9 @@ import httpx
 import base64
 import os
 from fastapi import HTTPException, status
+import json
 
+CACHE_TTL = 3600
 
 SPOTIFY_CLIENT_ID = os.getenv("SPOTIFY_CLIENT_ID")
 SPOTIFY_CLIENT_SECRET = os.getenv("SPOTIFY_CLIENT_SECRET")
@@ -63,3 +65,19 @@ async def get_track_metadata(track_id: str) -> dict:
         "artist": data["artists"][0]["name"] if data.get("artists") else "Unknown",
         "album_cover": data["album"]["images"][0]["url"] if data.get("album") and data["album"]["images"] else None,
     }
+    
+async def get_cached_spotify_track(track_id: str, redis_client):
+    cache_key = f"spotify:track:{track_id}"
+
+    cached_data = await redis_client.get(cache_key)
+    if cached_data:
+        return json.loads(cached_data)
+    
+    track_data = await get_track_metadata(track_id)
+    
+    if not track_data:
+            return None
+        
+    await redis_client.set(cache_key, json.dumps(track_data), ex=CACHE_TTL)
+
+    return track_data

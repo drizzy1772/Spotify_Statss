@@ -83,36 +83,37 @@ async def get_cached_spotify_track(track_id: str, redis_client):
 
     return track_data
 
-async def get_tracks_batch_stats(track_ids:list[str]) -> list[dict]:
+async def get_tracks_batch_stats(track_ids:list[str], client: httpx.AsyncClient) -> list[dict]:
     
     token = await get_spotify_token()
-    
-    ids_string = ",".join(track_ids)
-    url = f"[https://api.spotify.com/v1/tracks?ids=](https://api.spotify.com/v1/tracks?ids=){ids_string}"
     
     headers = {
         "Authorization": f"Bearer {token}"
     }
     
-    async with httpx.AsyncClient() as client:
-        response = await client.get(url, headers=headers)
-        if response.status_code != 200:
-            raise HTTPException("Spotify API Error: {response.text}")
-
-        data = response.json()
+    ids_string = ",".join(str(i) for i in track_ids)
+    
+    url = f"https://api.spotify.com/v1/tracks?ids={ids_string}"
+    
+    response = await client.get(url, headers=headers)
+    
+    if response.status_code != 200:
+        raise HTTPException(status_code=response.status_code, detail="spotify api error")
         
+    data = response.json()
+    
     formatted_data = []
     today = datetime.date.today()
     
     for track in data.get("tracks", []):
         if not track:
             continue
-
+        
         clean_dict = {
-        "track_id": track["id"],
-        "date": today,
-        "play_count": track.get("popularity", 0) 
-    }
-    
+            "track_id": track["id"],
+            "date": today,
+            "play_count": track.get("popularity", 0)
+        }
         formatted_data.append(clean_dict)
+    
     return formatted_data

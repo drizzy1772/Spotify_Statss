@@ -9,6 +9,7 @@ import base64
 import os
 from fastapi import HTTPException, status
 import json
+import datetime
 
 CACHE_TTL = 3600
 
@@ -81,3 +82,37 @@ async def get_cached_spotify_track(track_id: str, redis_client):
     await redis_client.set(cache_key, json.dumps(track_data), ex=CACHE_TTL)
 
     return track_data
+
+async def get_tracks_batch_stats(track_ids:list[str]) -> list[dict]:
+    
+    token = await get_spotify_token()
+    
+    ids_string = ",".join(track_ids)
+    url = f"[https://api.spotify.com/v1/tracks?ids=](https://api.spotify.com/v1/tracks?ids=){ids_string}"
+    
+    headers = {
+        "Authorization": f"Bearer {token}"
+    }
+    
+    async with httpx.AsyncClient() as client:
+        response = await client.get(url, headers=headers)
+        if response.status_code != 200:
+            raise HTTPException("Spotify API Error: {response.text}")
+
+        data = response.json()
+        
+    formatted_data = []
+    today = datetime.date.today()
+    
+    for track in data.get("tracks", []):
+        if not track:
+            continue
+
+        clean_dict = {
+        "track_id": track["id"],
+        "date": today,
+        "play_count": track.get("popularity", 0) 
+    }
+    
+        formatted_data.append(clean_dict)
+    return formatted_data

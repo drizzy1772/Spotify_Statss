@@ -8,7 +8,7 @@
 
 import logging
 import asyncio
-
+import httpx
 from app.celery_app import celery_app
 from app.services.spotify import get_tracks_batch_stats
 from app.database import SessionLocal
@@ -20,8 +20,18 @@ def get_all_tracked_ids(db) -> list[str]:
     return ["1xK1Gg9SxG8s2cg46sEAIG", "7ouMYZxgJACzhB5Z8Z2B7p"]
 
 
-@celery_app.task(name="sync_daily_spotify_stats")
-def sync_daily_spotify_stats():
+@celery_app.task(
+    name="sync_daily_spotify_stats",
+        bind=True,
+            autoretry_for=(
+                httpx.exceptions.ConnectionError,
+                httpx.TransportError,
+            ),
+            retry_backoff=True,
+            max_retries=3
+        )
+
+def sync_daily_spotify_stats(self):
     logger.info("Starting synchronization stats from Spotify")
     
     db = SessionLocal()
@@ -37,10 +47,10 @@ def sync_daily_spotify_stats():
     
         formatted_data = asyncio.run(get_tracks_batch_stats(track_ids))    
         
-        logger.info(f"Successfully saved stats for {len(formatted_data)} tracks")
+        batch_upsert_track_stats(db, formatted_data)
         
-    except Exception as e:
-        logger.error(f"Mistake when pipeline started: {e}")
-    
+        logger.info(f"Successfully saved stats for {len(formatted_data)} tracks")
+
+
     finally:
         db.close()

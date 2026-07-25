@@ -31,3 +31,4 @@ celery
 requests
 pytest
 pytest-asyncio
+aiokafka

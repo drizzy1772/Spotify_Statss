@@ -45,9 +45,11 @@ git clone [https://github.com/Drizzy1772/spotify-tracker](https://github.com/Dri
 cd spotify-tracker
 ```
 
-## 2. Setup environment variables
+```bash
+2. **Setup environment variables**
 Bash
 cp .env.example .env
+```
 
 ## 3. Run infrastructure via Docker
 Bash

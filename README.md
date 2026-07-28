@@ -45,32 +45,34 @@ git clone [https://github.com/Drizzy1772/spotify-tracker](https://github.com/Dri
 cd spotify-tracker
 ```
 
-```bash
 2. **Setup environment variables**
-Bash
+```bash
+
 cp .env.example .env
 ```
 
-```bash
+
 3. **Run infrastructure via Docker**
+```bash
 
 docker compose up -d
 ```
 
-```bash
+
 4. **Install dependencies (for local development)**
 
+```bash
 pip install -r requirements.txt
 ```
 
-```bash
 5. **Apply database migrations**
+```bash
 
 alembic upgrade head
 ```
 
-```bash
 6. **Start Kafka consumer and launch the app**
+```bash
 ## docker compose exec -d web python -m app.services.kafka_consumer
 ## uvicorn app.main:app --reload
 ```

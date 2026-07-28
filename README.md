@@ -139,28 +139,3 @@ This project is developed by Drizzy1772.
 ## License
 
 This project is licensed under MIT License.
-
-
-
-## API Scheme
-
-```mermaid
-flowchart LR
-    Client([Client / Frontend]) -->|HTTP REST| API[FastAPI App]
-    
-    subgraph Data Flow
-        API -->|Produce Track Data| Kafka[Apache Kafka]
-        Kafka -->|Consume Async| Consumer[Kafka Consumer]
-        Consumer -->|UPSERT Data| DB[(PostgreSQL)]
-    end
-    
-    subgraph Cache & Tasks
-        API <-->|Read / Write| Redis[(Redis)]
-        API -->|Dispatch| Celery[Celery Workers]
-        Celery -.->|Background processing| DB
-    end
-    
-    style API fill:#009688,stroke:#00796B,color:#fff
-    style Kafka fill:#E65100,stroke:#BF360C,color:#fff
-    style DB fill:#1565C0,stroke:#0D47A1,color:#fff
-    style Redis fill:#C62828,stroke:#b71c1c,color:#fff

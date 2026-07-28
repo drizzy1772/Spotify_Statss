@@ -51,23 +51,26 @@ Bash
 cp .env.example .env
 ```
 
-## 3. Run infrastructure via Docker
-Bash
+```bash
+3. **Run infrastructure via Docker**
 
 docker compose up -d
+```
 
-## 4. Install dependencies (for local development)
-Bash
+```bash
+4. **Install dependencies (for local development)**
 
 pip install -r requirements.txt
+```
 
-## 5. Apply database migrations
-Bash
+```bash
+5. **Apply database migrations**
 
 alembic upgrade head
+```
 
-## 6. Start Kafka consumer and launch the app
-Bash
-
+```bash
+6. **Start Kafka consumer and launch the app**
 ## docker compose exec -d web python -m app.services.kafka_consumer
 ## uvicorn app.main:app --reload
+```

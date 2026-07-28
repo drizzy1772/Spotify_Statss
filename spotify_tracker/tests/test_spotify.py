@@ -40,4 +40,4 @@ async def test_get_tracks_batch_stats(mock_get, mock_get_token):
     assert len(result) == 1
     assert result[0]["track_id"] == "1xK1Gg9SxG8s2cg46sEAIG"
     
-    mock_get.assert_awaited_once()
+    mock_httpx_client.get.assert_awaited_once()

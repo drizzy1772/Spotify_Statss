@@ -30,14 +30,6 @@ Production-ready asynchronous REST API for tracking, saving, and analyzing Spoti
 ## API Scheme
 *(Здесь позже сможешь добавить ссылку на картинку со схемой)*
 
-## API Endpoints
-
-| Method | Path | Description |
-|---|---|---|
-| GET | /analytics/tracks/{track_id}/stats | Get detailed analytics for a track |
-| GET | /analytics/tracks/batch | Fetch statistics for a batch of tracks |
-| GET | /users/{user_id}/history | Retrieve user's listening history |
-| POST | /sync/trigger | Manually trigger Spotify data sync |
 
 1. **Clone the repository**
 ```bash
@@ -76,3 +68,16 @@ alembic upgrade head
 docker compose exec -d web python -m app.services.kafka_consumer
 uvicorn app.main:app --reload
 ```
+**Edit .env**
+SPOTIFY_CLIENT_ID=your-client-id
+SPOTIFY_CLIENT_SECRET=your-client-secret
+SPOTIFY_REDIRECT_URI=http://127.0.0.1:8000/callback
+
+POSTGRES_USER=postgres_user
+POSTGRES_PASSWORD=your-password
+POSTGRES_DB=spotify_tracker
+
+REDIS_HOST=redis
+REDIS_PORT=6379
+
+KAFKA_BROKER_URL=kafka:9092

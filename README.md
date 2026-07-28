@@ -69,6 +69,7 @@ docker compose exec -d web python -m app.services.kafka_consumer
 uvicorn app.main:app --reload
 ```
 **Edit .env**
+```bash
 SPOTIFY_CLIENT_ID=your-client-id
 SPOTIFY_CLIENT_SECRET=your-client-secret
 SPOTIFY_REDIRECT_URI=http://127.0.0.1:8000/callback
@@ -81,3 +82,4 @@ REDIS_HOST=redis
 REDIS_PORT=6379
 
 KAFKA_BROKER_URL=kafka:9092
+```

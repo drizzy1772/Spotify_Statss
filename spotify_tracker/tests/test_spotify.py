@@ -31,6 +31,8 @@ async def test_get_tracks_batch_stats(mock_get, mock_get_token):
     
     mock_httpx_client = AsyncMock()
     
+    mock_httpx_client.get.return_value = mock_response
+    
     result = await get_tracks_batch_stats(track_ids, client=mock_httpx_client)
     
     print(f"\n THATS RESULT: {result}\n")

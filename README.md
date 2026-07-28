@@ -41,7 +41,7 @@ Production-ready asynchronous REST API for tracking, saving, and analyzing Spoti
 
 ## Quick Start
 ```bash
-git clone [https://github.com/Drizzy1772/spotify-tracker](https://**1. Clone the repository**
+Clone the repository**
 ```bash
 git clone [https://github.com/Drizzy1772/spotify-tracker](https://github.com/Drizzy1772/spotify-tracker)
 cd spotify-tracker

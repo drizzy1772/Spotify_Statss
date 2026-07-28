@@ -29,6 +29,8 @@ Production-ready asynchronous REST API for tracking, saving, and analyzing Spoti
 
 ## API Endpoints
 
+
+```bash
 spotify_tracker/
 ├── app/
 │ ├── main.py # Routes & app entry point
@@ -52,6 +54,7 @@ spotify_tracker/
 ├── Dockerfile
 ├── docker-compose.yml
 └── requirements.txt
+```
 
 
 | Method | Path | Description |

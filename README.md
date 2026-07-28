@@ -21,23 +21,12 @@ Production-ready asynchronous REST API and data pipeline for tracking, saving, a
 ✅ **Test Coverage:** Comprehensive async testing suite using `pytest` and `unittest.mock.AsyncMock`.
 ✅ **Fully Dockerized:** Isolated containers for Web, Kafka, Postgres, Redis, and Celery with hot-reload volumes.
 
-### API Scheme
-```mermaid
-graph LR
-    A[Spotify API] -->|Fetch Tracks| B(FastAPI / Celery)
-    B -->|Produce Event| C{Kafka Topic: spotify_tracks}
-    C -->|Consume Event| D[Async Consumer]
-    D -->|Upsert Data| E[(PostgreSQL)]
-    F[Client] -->|Request Stats| B
-    B -->|Cache / Rate Limit| G[(Redis)]
-API Endpoints
-Method	Path	Description
-GET	/analytics/tracks/{track_id}/stats	Get detailed analytics and cached metadata for a specific track
-GET	/analytics/tracks/batch	Fetch statistics for a batch of track IDs
-GET	/users/{user_id}/history	Retrieve user's listening history and top tracks
-POST	/sync/trigger	Manually trigger Celery task to fetch latest Spotify data
-Quick Start
-Bash
+
+Method,Path,Description
+GET,/analytics/tracks/{track_id}/stats,Get detailed analytics and cached metadata for a specific track
+GET,/analytics/tracks/batch,Fetch statistics for a batch of track IDs
+GET,/users/{user_id}/history,Retrieve user's listening history and top tracks
+POST,/sync/trigger,Manually trigger Celery task to fetch latest Spotify data
 
 # Clone the repository
 git clone [https://github.com/Drizzy1772/spotify-tracker](https://github.com/Drizzy1772/spotify-tracker)

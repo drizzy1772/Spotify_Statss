@@ -39,9 +39,11 @@ Production-ready asynchronous REST API for tracking, saving, and analyzing Spoti
 | GET | /users/{user_id}/history | Retrieve user's listening history |
 | POST | /sync/trigger | Manually trigger Spotify data sync |
 
-## Quick Start
+1. **Clone the repository**
+```bash
 git clone [https://github.com/Drizzy1772/spotify-tracker](https://github.com/Drizzy1772/spotify-tracker)
 cd spotify-tracker
+```
 
 ## 2. Setup environment variables
 Bash

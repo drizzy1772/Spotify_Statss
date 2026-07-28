@@ -27,6 +27,27 @@ Production-ready asynchronous REST API for tracking, saving, and analyzing Spoti
 
 ✅ Fully containerized infrastructure
 
+## API Endpoints
+
+| Method | Path | Description |
+|---|---|---|
+| GET | /login | Redirects to Spotify authorization page |
+| GET | /callback | Handles Spotify OAuth callback, saves tokens |
+| POST | /listen/{track_id} | Records a listening event for a track |
+| GET | /analytics/tracks/{track_id}/stats | Get analytics for a specific track |
+| POST | /test_task | Trigger a test Celery task |
+
+## API Docs
+
+Swagger UI available at: http://localhost:8000/docs
+
+## Testing
+```bash
+docker compose exec web pytest
+```
+
+## Project Structure
+
 ## API Scheme
 *(Здесь позже сможешь добавить ссылку на картинку со схемой)*
 

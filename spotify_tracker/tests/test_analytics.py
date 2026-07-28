@@ -37,7 +37,9 @@ def test_get_track_analytics_not_found(mock_redis_client):
     mock_redis_client.get = AsyncMock(return_value="1")
     mock_redis_client.incr = AsyncMock(return_value=2)
     
-    response = client.get("/analytics/tracks/999/stats")
+    response = client.get(
+        "/analytics/tracks/999/stats",
+        params={"user_id": 1})
     
     print("FASTAPI ERROR:", response.json())
     
@@ -59,7 +61,8 @@ def test_get_track_analytics_success(mock_get_track_metadata, mock_redis_client)
     }
 
     response = client.get(
-        "/analytics/tracks/123/stats"
+        "/analytics/tracks/123/stats",
+        params={"user_id": 1}
     )
 
     assert response.status_code == 200

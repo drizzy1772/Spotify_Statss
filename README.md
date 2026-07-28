@@ -29,7 +29,15 @@ Production-ready asynchronous REST API for tracking, saving, and analyzing Spoti
 
 ## API Endpoints
 
+| Method | Path | Description |
+|---|---|---|
+| GET | /login | Redirects to Spotify authorization page |
+| GET | /callback | Handles Spotify OAuth callback, saves tokens |
+| POST | /listen/{track_id} | Records a listening event for a track |
+| GET | /analytics/tracks/{track_id}/stats | Get analytics for a specific track |
+| POST | /test_task | Trigger a test Celery task |
 
+## Project Structure
 ```bash
 spotify_tracker/
 ├── app/
@@ -55,17 +63,6 @@ spotify_tracker/
 ├── docker-compose.yml
 └── requirements.txt
 ```
-
-
-| Method | Path | Description |
-|---|---|---|
-| GET | /login | Redirects to Spotify authorization page |
-| GET | /callback | Handles Spotify OAuth callback, saves tokens |
-| POST | /listen/{track_id} | Records a listening event for a track |
-| GET | /analytics/tracks/{track_id}/stats | Get analytics for a specific track |
-| POST | /test_task | Trigger a test Celery task |
-
-## Project Structure
 
 
 ## API Docs

@@ -46,11 +46,6 @@ Swagger UI available at: http://localhost:8000/docs
 docker compose exec web pytest
 ```
 
-## Project Structure
-
-## API Scheme
-*(Здесь позже сможешь добавить ссылку на картинку со схемой)*
-
 
 1. **Clone the repository**
 ```bash

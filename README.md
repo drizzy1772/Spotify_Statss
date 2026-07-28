@@ -1,70 +1,44 @@
 # Spotify Tracker API
+Production-ready asynchronous REST API for tracking, saving, and analyzing Spotify listening history in real-time.
 
-Production-ready asynchronous REST API and data pipeline for tracking, saving, and analyzing Spotify listening history in real-time.
-
-### Stack
+## Stack
 * FastAPI
-* Apache Kafka (KRaft)
 * PostgreSQL
 * Redis
+* Apache Kafka
 * Celery
-* SQLAlchemy 2.0 (asyncpg)
+* SQLAlchemy 2.0
 * Docker Compose
-* Pytest
 
-### Key Features
-✅ **Real-time Event Streaming:** Asynchronous Kafka producer and consumer for processing Spotify tracks.
-✅ **Robust Data Persistence:** `UPSERT` logic (ON CONFLICT DO UPDATE) handling track metadata in PostgreSQL.
-✅ **Background Processing:** Celery integration for asynchronous tasks and scheduled Spotify API polling.
-✅ **High Performance:** Redis caching for fast GET requests and analytics retrieval.
-✅ **Rate Limiting:** Custom dependency-injected rate limits using Redis.
-✅ **Test Coverage:** Comprehensive async testing suite using `pytest` and `unittest.mock.AsyncMock`.
-✅ **Fully Dockerized:** Isolated containers for Web, Kafka, Postgres, Redis, and Celery with hot-reload volumes.
+## Key Features
+✅ Asynchronous Kafka consumer and producer for processing Spotify tracks
+✅ Data persistence with UPSERT logic in PostgreSQL
+✅ Background task processing and scheduling with Celery
+✅ Rate limiting on critical endpoints
+✅ Redis caching for GET requests
+✅ Global error handling
+✅ Test coverage (pytest)
+✅ Fully containerized infrastructure
 
+## API Scheme
+*(Здесь позже сможешь добавить ссылку на картинку со схемой)*
 
-Method,Path,Description
-GET,/analytics/tracks/{track_id}/stats,Get detailed analytics and cached metadata for a specific track
-GET,/analytics/tracks/batch,Fetch statistics for a batch of track IDs
-GET,/users/{user_id}/history,Retrieve user's listening history and top tracks
-POST,/sync/trigger,Manually trigger Celery task to fetch latest Spotify data
+## API Endpoints
 
-# Clone the repository
+| Method | Path | Description |
+|---|---|---|
+| GET | /analytics/tracks/{track_id}/stats | Get detailed analytics for a track |
+| GET | /analytics/tracks/batch | Fetch statistics for a batch of tracks |
+| GET | /users/{user_id}/history | Retrieve user's listening history |
+| POST | /sync/trigger | Manually trigger Spotify data sync |
+
+## Quick Start
+```bash
 git clone [https://github.com/Drizzy1772/spotify-tracker](https://github.com/Drizzy1772/spotify-tracker)
 cd spotify-tracker
-
-# Setup environment variables
 cp .env.example .env
-
-# Build and start all services (FastAPI, Kafka, Postgres, Redis, Celery)
-docker compose up -d --build
-
-# Run database migrations (or init script)
-docker compose exec web alembic upgrade head
-
-# Start the Kafka consumer in the background
+docker compose up -d
+pip install -r requirements.txt
+alembic upgrade head
 docker compose exec -d web python -m app.services.kafka_consumer
-
-Structure of Project
-Plaintext
-
-spotify_tracker/
-├── app/
-│   ├── database.py          # SQLAlchemy engine and session makers
-│   ├── models_spoti.py      # Database models
-│   ├── routers/             # FastAPI endpoints (analytics, dependencies)
-│   └── services/            # Business logic, Kafka consumer/producer, Spotify client
-├── tests/                   # Pytest async test suite
-├── docker-compose.yml       # Infrastructure orchestration
-├── requirements.txt         # Python dependencies
-└── .env.example             # Environment template
-
-API Docs
-
-Swagger UI available at: http://localhost:8000/docs
-ReDoc available at: http://localhost:8000/redoc
-Author
-
-This project is developed by Drizzy1772.
-License
-
-This project is licensed under the MIT License.
+uvicorn app.main:app --reload

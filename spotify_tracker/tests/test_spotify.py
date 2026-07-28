@@ -8,7 +8,7 @@
 import pytest
 from unittest.mock import patch, AsyncMock, MagicMock
 from app.services.spotify import get_tracks_batch_stats
-from unittest import MagicMock
+from unittest.mock import MagicMock
 
 pytestmark = pytest.mark.anyio
 

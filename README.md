@@ -28,6 +28,7 @@ Production-ready asynchronous REST API for tracking, saving, and analyzing Spoti
 ✅ Fully containerized infrastructure
 
 ## API Endpoints
+
 spotify_tracker/
 ├── app/
 │ ├── main.py # Routes & app entry point

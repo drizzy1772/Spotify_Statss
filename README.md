@@ -73,6 +73,6 @@ alembic upgrade head
 
 6. **Start Kafka consumer and launch the app**
 ```bash
-## docker compose exec -d web python -m app.services.kafka_consumer
-## uvicorn app.main:app --reload
+docker compose exec -d web python -m app.services.kafka_consumer
+uvicorn app.main:app --reload
 ```

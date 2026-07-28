@@ -127,3 +127,10 @@ REDIS_PORT=6379
 
 KAFKA_BROKER_URL=kafka:9092
 ```
+## Author
+
+This project is developed by Drizzy1772.
+
+## License
+
+This project is licensed under MIT License.

@@ -39,6 +39,8 @@ def test_get_track_analytics_not_found(mock_redis_client):
     
     response = client.get("/analytics/tracks/999/stats")
     
+    print("FASTAPI ERROR:", response.json())
+    
     assert response.status_code == 404
 
 @patch('app.routers.dependencies.redis_client')

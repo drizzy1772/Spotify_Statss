@@ -63,6 +63,11 @@ spotify_tracker/
 ├── docker-compose.yml
 └── requirements.txt
 ```
+## Project Structure with IMAGE:
+<img width="744" height="448" alt="SpotifyStats" src="https://github.com/user-attachments/assets/10f9e4dc-b847-4b5f-99d2-8d5dfb8c7e7d" />
+
+## Swagger UI Image:
+<img width="1363" height="643" alt="spotifystats" src="https://github.com/user-attachments/assets/cbb06451-f40a-4f13-805d-0df28157a002" />
 
 
 ## API Docs

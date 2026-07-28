@@ -28,6 +28,30 @@ Production-ready asynchronous REST API for tracking, saving, and analyzing Spoti
 ✅ Fully containerized infrastructure
 
 ## API Endpoints
+spotify_tracker/
+├── app/
+│ ├── main.py # Routes & app entry point
+│ ├── models/ # SQLAlchemy models (SpotifyToken, etc.)
+│ ├── database.py # Async DB engine & session
+│ ├── redis_client.py # Redis client & token caching
+│ ├── spotify_auth.py # Access token retrieval/refresh logic
+│ ├── kafka_producer.py # Publishes track events to Kafka
+│ ├── kafka_consumer.py # Consumes events, UPSERTs into Postgres
+│ └── tasks.py # Celery tasks
+├── alembic/
+│ ├── versions/
+│ └── env.py
+├── tests/
+├── .github/
+│ └── workflows/
+│ └── tests.yml
+├── .env
+├── .gitignore
+├── alembic.ini
+├── Dockerfile
+├── docker-compose.yml
+└── requirements.txt
+
 
 | Method | Path | Description |
 |---|---|---|
@@ -36,6 +60,9 @@ Production-ready asynchronous REST API for tracking, saving, and analyzing Spoti
 | POST | /listen/{track_id} | Records a listening event for a track |
 | GET | /analytics/tracks/{track_id}/stats | Get analytics for a specific track |
 | POST | /test_task | Trigger a test Celery task |
+
+## Project Structure
+
 
 ## API Docs
 

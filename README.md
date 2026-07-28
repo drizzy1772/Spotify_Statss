@@ -12,12 +12,19 @@ Production-ready asynchronous REST API for tracking, saving, and analyzing Spoti
 
 ## Key Features
 ✅ Asynchronous Kafka consumer and producer for processing Spotify tracks
+
 ✅ Data persistence with UPSERT logic in PostgreSQL
+
 ✅ Background task processing and scheduling with Celery
+
 ✅ Rate limiting on critical endpoints
+
 ✅ Redis caching for GET requests
+
 ✅ Global error handling
+
 ✅ Test coverage (pytest)
+
 ✅ Fully containerized infrastructure
 
 ## API Scheme

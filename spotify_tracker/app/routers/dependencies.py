@@ -31,6 +31,8 @@ async def get_http_client() -> AsyncGenerator[httpx.AsyncClient, None]:
 async def check_rate_limit(user_id: str, redis: Redis = Depends(get_redis)):
     await redis.get(user_id)
 
+    redis_key = f"rate_limit:{user_id}"
+    
     raw_value = await redis_client.get(redis_key)
     current_count = int(raw_value or 0)
     

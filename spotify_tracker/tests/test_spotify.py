@@ -8,7 +8,7 @@
 import pytest
 from unittest.mock import patch, AsyncMock, MagicMock
 from app.services.spotify import get_tracks_batch_stats
-from unittest.mock import MagicMock
+from unittest.mock import AsyncMock, MagicMock
 
 pytestmark = pytest.mark.anyio
 
@@ -29,7 +29,7 @@ async def test_get_tracks_batch_stats(mock_get, mock_get_token):
         
     track_ids = ["1xK1Gg9SxG8s2cg46sEAIG"]
     
-    mock_httpx_client = MagicMock()
+    mock_httpx_client = AsyncMock()
     
     result = await get_tracks_batch_stats(track_ids, client=mock_httpx_client)
     

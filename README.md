@@ -47,22 +47,22 @@ cd spotify-tracker
 Bash
 cp .env.example .env
 
-3. Run infrastructure via Docker
+## 3. Run infrastructure via Docker
 Bash
 
 docker compose up -d
 
-4. Install dependencies (for local development)
+## 4. Install dependencies (for local development)
 Bash
 
 pip install -r requirements.txt
 
-5. Apply database migrations
+## 5. Apply database migrations
 Bash
 
 alembic upgrade head
 
-6. Start Kafka consumer and launch the app
+## 6. Start Kafka consumer and launch the app
 Bash
 
 docker compose exec -d web python -m app.services.kafka_consumer
